@@ -1,0 +1,14 @@
+# System Files
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+
+# Project
+tmp
+data
+build
+go.sum
+.env
+.env.local
