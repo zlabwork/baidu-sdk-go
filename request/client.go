@@ -33,7 +33,8 @@ func (cli *Client) SetHost(host string) {
 func (cli *Client) BuildRequest(method, uri string, header map[string]string, body string) ([]byte, error) {
 
     // 1. 请求时间
-    t := time.Now()
+    loc, _ := time.LoadLocation("")
+    t := time.Now().In(loc)
 
     // 2. header
     ph := pubRequestHeader{
@@ -41,7 +42,7 @@ func (cli *Client) BuildRequest(method, uri string, header map[string]string, bo
         Length:        "0",
         Type:          "application/x-www-form-urlencoded",
         Md5:           "",
-        Date:          t.Format(time.RFC1123Z),
+        Date:          t.Format("Mon, 02 Jan 2006 15:04:05 GMT"),
         Host:          cli.host,
         BceDate:       t.Format("2006-01-02T15:04:05Z"),
     }
