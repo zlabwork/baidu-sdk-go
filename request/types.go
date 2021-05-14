@@ -1,6 +1,6 @@
 package request
 
-type PubRequest struct {
+type pubRequestHeader struct {
     Authorization string `json:"authorization"`
     Length        string `json:"content-Length"`
     Type          string `json:"content-Type"`
@@ -10,7 +10,7 @@ type PubRequest struct {
     BceDate       string `json:"x-bce-date"`
 }
 
-type PubResponse struct {
+type pubResponse struct {
     Length     string `json:"Content-Length"`
     Type       string `json:"Content-Type"`
     Md5        string `json:"Content-MD5"`
@@ -20,12 +20,4 @@ type PubResponse struct {
     Server     string `json:"Server"`
     ReqId      string `json:"x-bce-request-id"`
     DebugId    string `json:"x-bce-debug-id"`
-}
-
-type requestData struct {
-    method string
-    host   string
-    uri    string
-    header map[string]string
-    body   string
 }
