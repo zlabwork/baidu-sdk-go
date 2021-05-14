@@ -30,7 +30,7 @@ func (cli *Client) SetHost(host string) {
     cli.host = host
 }
 
-func (cli *Client) BuildRequest(method, uri string, header map[string]string, body string) {
+func (cli *Client) BuildRequest(method, uri string, header map[string]string, body string) ([]byte, error) {
 
     // 1. 请求时间
     t := time.Now()
@@ -62,5 +62,5 @@ func (cli *Client) BuildRequest(method, uri string, header map[string]string, bo
     cli.request.authorization = cli.authorizationV1(sign)
 
     // 5. request
-    cli.request.httpRequest()
+    return cli.request.httpRequest()
 }

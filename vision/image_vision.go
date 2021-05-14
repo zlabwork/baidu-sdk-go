@@ -2,6 +2,7 @@ package vision
 
 import (
     "baidu_sdk/request"
+    "fmt"
 )
 
 const (
@@ -24,5 +25,9 @@ func NewVision() *vision {
 // @link https://ai.baidu.com/ai-doc/IMAGERECOGNITION/Xk3bcxe21
 func (vi *vision) Scene() {
     uri := "/rest/2.0/image-classify/v2/advanced_general"
-    vi.cli.BuildRequest("GET", uri, nil, "")
+    body, err := vi.cli.BuildRequest("POST", uri, nil, "")
+    if err != nil {
+        return
+    }
+    fmt.Println(string(body))
 }
