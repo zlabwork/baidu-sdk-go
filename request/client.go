@@ -11,8 +11,8 @@ type credentials struct {
 
 type Client struct {
     credentials credentials
-    host        string
     timeout     int64
+    request     requestData
 }
 
 func NewClient() *Client {
@@ -25,5 +25,5 @@ func NewClient() *Client {
 }
 
 func (cli *Client) SetHost(host string) {
-    cli.host = host
+    cli.request.host = host
 }

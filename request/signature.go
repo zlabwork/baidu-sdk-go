@@ -24,21 +24,24 @@ func (cli *Client) createSignV1(method string, uri string) (sign string, timesta
     // 3. canonicalRequest - 排序、Escape、拼接
     // a>
     ur, _ := url.Parse(uri)
-    var keys []string
-    for k, _ := range ur.Query() {
-        keys = append(keys, k)
-    }
-    sort.Strings(keys)
     query := ""
-    for _, k := range keys {
-        query += "&" + k + "=" + url.QueryEscape(ur.Query()[k][0])
+    if len(ur.Query()) > 0 {
+        var keys []string
+        for k, _ := range ur.Query() {
+            keys = append(keys, k)
+        }
+        sort.Strings(keys)
+        for _, k := range keys {
+            query += "&" + k + "=" + url.QueryEscape(ur.Query()[k][0])
+        }
+        query = query[1:]
     }
-    query = query[1:]
+
     // b>
     reqRaw := method + "\n"
     reqRaw += ur.Path + "\n"
     reqRaw += query + "\n"
-    reqRaw += "host:" + cli.host + "\n"
+    reqRaw += "host:" + cli.request.host + "\n"
     reqRaw += "x-bce-date:" + url.QueryEscape(tsUTC)
 
     // 4. signingKey
