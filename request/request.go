@@ -21,11 +21,22 @@ type requestData struct {
 func (req *requestData) httpRequest() ([]byte, error) {
     url := req.host + req.uri
 
+    // 1. headers
+    headers := make(map[string]string)
+    headers["authorization"] = req.authorization
+    headers["content-Type"] = req.pubHeader.Type
+    headers["date"] = req.pubHeader.Date
+    headers["x-bce-date"] = req.pubHeader.BceDate
+    for k, v := range req.header {
+        headers[k] = v
+    }
+
     // 1. 准备
     client := resty.New()
+    client.SetDebug(true) // TODO :: http debug
+    client.SetContentLength(true)
     request := client.R().
-        SetHeaders(req.header).
-        // SetAuthToken(req.authorization).
+        SetHeaders(headers).
         SetBody([]byte(req.body))
 
     // 2. 请求
