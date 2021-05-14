@@ -16,8 +16,8 @@ type Client struct {
 }
 
 func NewClient() *Client {
-    id := os.Getenv("BAIDU_ACCESS_KEY_ID")
-    secret := os.Getenv("BAIDU_ACCESS_KEY_SECRET")
+    id := os.Getenv("BAIDU_ACCESS_ID")
+    secret := os.Getenv("BAIDU_ACCESS_SECRET")
     return &Client{
         credentials: credentials{id, secret},
         timeout:     900,

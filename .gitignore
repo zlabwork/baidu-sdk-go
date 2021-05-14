@@ -12,3 +12,4 @@ build
 go.sum
 .env
 .env.local
+env.sh
