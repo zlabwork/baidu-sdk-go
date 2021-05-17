@@ -21,32 +21,25 @@ func (cli *Client) createSignV1() (sign string) {
     // 2. authStringPrefix
     authStringPrefix := "bce-auth-v1/" + cli.credentials.id + "/" + tsUTC + "/" + timeout
 
-    // 3. path escape
+    // 3. uri query params
     ur, _ := url.Parse(cli.request.uri)
-    uriEscape := ur.Path
-    if len(ur.RawQuery) > 0 {
-        uriEscape += url.QueryEscape("?" + ur.RawQuery)
+    query := ""
+    if len(ur.Query()) > 0 {
+        var ks []string
+        for k, _ := range ur.Query() {
+            ks = append(ks, k)
+        }
+        sort.Strings(ks)
+        for _, k := range ks {
+            query += "&" + k + "=" + ur.Query()[k][0]
+        }
+        query = query[1:]
     }
 
     // 4. canonicalRequest - 排序、Escape、拼接
-    // a>
-    body := ""
-    if len(cli.request.body) > 0 {
-        var keys []string
-        for k, _ := range cli.request.body {
-            keys = append(keys, k)
-        }
-        sort.Strings(keys)
-        for _, k := range keys {
-            body += "&" + k + "=" + url.QueryEscape(cli.request.body[k])
-        }
-        body = body[1:]
-    }
-
-    // b>
     reqRaw := cli.request.method + "\n"
-    reqRaw += uriEscape + "\n"
-    reqRaw += body + "\n"
+    reqRaw += ur.Path + "\n"
+    reqRaw += query + "\n"
     reqRaw += cli.signedHeaders()
 
     // 5. signingKey
