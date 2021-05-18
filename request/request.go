@@ -21,7 +21,7 @@ func (req *requestData) httpRequest() ([]byte, error) {
 
     // 1. 准备
     client := resty.New()
-    client.SetDebug(true) // TODO :: http debug
+    client.SetDebug(false)
     client.SetContentLength(true)
 
     // request
