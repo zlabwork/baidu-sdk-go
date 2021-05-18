@@ -2,11 +2,10 @@ package vision
 
 import (
     "baidu_sdk/request"
-    "fmt"
 )
 
 const (
-    endpoint = "https://aip.baidubce.com"
+    endpoint = "aip.baidubce.com"
 )
 
 type vision struct {
@@ -23,11 +22,24 @@ func NewVision() *vision {
 
 // 场景检测
 // @link https://ai.baidu.com/ai-doc/IMAGERECOGNITION/Xk3bcxe21
-func (vi *vision) Scene() {
+func (vi *vision) Scene(url string) ([]byte, error) {
+
+    // 1. uri
     uri := "/rest/2.0/image-classify/v2/advanced_general"
-    body, err := vi.cli.BuildRequest("POST", uri, nil, "")
+
+    // 2. header
+    header := make(map[string]string)
+    header["Content-Type"] = "application/x-www-form-urlencoded"
+
+    // 3. body
+    body := make(map[string]string)
+    body["url"] = url
+    body["baike_num"] = "0"
+
+    // 4. result
+    resp, err := vi.cli.BuildRequest("POST", uri, header, body)
     if err != nil {
-        return
+        return nil, err
     }
-    fmt.Println(string(body))
+    return resp, nil
 }
