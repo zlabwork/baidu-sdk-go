@@ -4,6 +4,8 @@ go get github.com/zlabwork/baidu-sdk-go
 ```
 
 ## 使用
+
+#### 1. 场景检测
 ```golang
 client := vision.NewVision()
 url := "https://img1.baidu.com/it/u=2340497325,2166644129&fm=26&fmt=auto&gp=0.jpg"
@@ -43,6 +45,15 @@ resp, _ := client.Scene(url)
    "log_id": 1394601776337911808,
    "result_num": 5
 }
+```
+
+#### 2. 地标检测
+```.env
+resp, _ := client.Landmark("/download/IMG_demo.jpg")
+```
+响应结果:
+```json
+{"result":{"landmark":"悉尼歌剧院"},"log_id":1394862841642614784}
 ```
 
 ## 文档
