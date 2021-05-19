@@ -1,4 +1,4 @@
-module baidu_sdk
+module github.com/zlabwork/baidu-sdk-go
 
 go 1.14
 
