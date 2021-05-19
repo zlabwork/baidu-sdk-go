@@ -97,3 +97,40 @@ func (vi *vision) Landmark(address string) ([]byte, error) {
     }
     return resp, nil
 }
+
+// 多主体检测
+// @link https://ai.baidu.com/ai-doc/IMAGERECOGNITION/Wk7em3moi
+func (vi *vision) ObjectsDetect(address string) ([]byte, error) {
+
+    // 1. uri
+    uri := "/rest/2.0/image-classify/v1/multi_object_detect"
+
+    // 2. header
+    header := make(map[string]string)
+    header["Content-Type"] = "application/x-www-form-urlencoded"
+
+    // 3. body
+    body := make(map[string]string)
+    if address[:4] == "http" {
+        body["url"] = address
+    } else {
+        f, err := os.Open(address)
+        if err != nil {
+            return nil, err
+        }
+        defer f.Close()
+        b, err := ioutil.ReadAll(f)
+        if err != nil {
+            return nil, err
+        }
+        encode := base64.StdEncoding
+        body["image"] = encode.EncodeToString(b)
+    }
+
+    // 4. result
+    resp, err := vi.cli.BuildRequest("POST", uri, header, body)
+    if err != nil {
+        return nil, err
+    }
+    return resp, nil
+}
