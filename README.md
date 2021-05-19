@@ -3,6 +3,12 @@
 go get github.com/zlabwork/baidu-sdk-go
 ```
 
+```bash
+# 环境变量
+export BAIDU_ACCESS_ID=1a7a...
+export BAIDU_ACCESS_SECRET=5423...
+```
+
 ## 使用
 
 #### 1. 场景检测
