@@ -1,7 +1,7 @@
 package vision
 
 import (
-    "baidu_sdk/request"
+    "github.com/zlabwork/baidu-sdk-go/request"
 )
 
 const (
