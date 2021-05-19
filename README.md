@@ -54,13 +54,42 @@ resp, _ := client.Scene(url)
 ```
 
 #### 2. 地标检测
-```.env
+```golang
 resp, _ := client.Landmark("/download/IMG_demo.jpg")
 ```
 响应结果:
 ```json
-{"result":{"landmark":"悉尼歌剧院"},"log_id":1394862841642614784}
+{
+    "result":{
+        "landmark":"悉尼歌剧院"
+    },
+    "log_id":"1394862841642614784"
+}
 ```
+
+#### 3. 多场景检测
+```golang
+resp, _ := client.ObjectsDetect("/download/IMG_demo.jpg")
+```
+响应结果:
+```json
+{
+    "result":[
+        {
+            "score":0.40422565,
+            "name":"植物",
+            "location":{
+                "top":0,
+                "left":5,
+                "width":313,
+                "height":278
+            }
+        }
+    ],
+    "log_id":13949321496173504
+}
+```
+
 
 ## 文档
 [文档中心](https://cloud.baidu.com/doc/index.html)  
